@@ -44,7 +44,7 @@ public class ModuleAdapter extends ArrayAdapter<Module> {
 
         tvModule.setText(currentModule.getName());
         tvCode.setText(currentModule.getCode());
-        //tvCode.setTextColor(Color.BLUE);
+         tvCode.setTextColor(Color.BLUE);
         // Return the nicely done up View to the ListView
         return rowView;
     }

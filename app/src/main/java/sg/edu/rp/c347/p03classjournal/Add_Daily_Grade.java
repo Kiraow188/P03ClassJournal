@@ -25,7 +25,7 @@ public class Add_Daily_Grade extends AppCompatActivity {
         tvWeek = findViewById(R.id.tvWeek);
         btnSubmit = findViewById(R.id.buttonSubmit);
         rg = findViewById(R.id.rg);
-        tvDg.setBackgroundColor(Color.YELLOW);
+        tvDg.setTextColor(Color.YELLOW);
 
         Intent i = getIntent();
 

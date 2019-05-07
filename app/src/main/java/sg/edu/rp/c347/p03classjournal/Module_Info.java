@@ -42,8 +42,8 @@ public class Module_Info extends AppCompatActivity {
 
         c302 = new ArrayList<Grade>();
         c302.add(new Grade("Week 1", "A"));
-        c302.add(new Grade("Week 1", "B"));
-        c302.add(new Grade("Week 1", "c"));
+        c302.add(new Grade("Week 2", "B"));
+        c302.add(new Grade("Week 3", "C"));
 
         if (module.equalsIgnoreCase("c347")) {
             aa = new CustomAdapter(this, R.layout.row, c347);
