@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ListView lv;
-    ArrayList<String> modules;
+    ArrayList<Module> modules;
+    ArrayAdapter aa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.lvModules);
 
-        modules = new ArrayList<String>();
-        modules.add("C347");
-        modules.add("C302");
+        modules = new ArrayList<Module>();
+        modules.add(new Module("C347", "Android Programming II"));
+        modules.add(new Module("C302", "Web Services"));
 
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,modules);
+        aa = new ModuleAdapter(this, R.layout.module, modules);
 
         lv.setAdapter(aa);
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, Module_Info.class);
-                i.putExtra("module", modules.get(position));
+                i.putExtra("module", modules.get(position).getCode());
                 startActivity(i);
             }
 
