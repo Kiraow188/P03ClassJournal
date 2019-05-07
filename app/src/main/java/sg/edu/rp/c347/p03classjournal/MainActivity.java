@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     ListView lv;
     ArrayList<String> modules;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, Module_Info.class);
+                i.putExtra("module", modules.get(position));
                 startActivity(i);
             }
 

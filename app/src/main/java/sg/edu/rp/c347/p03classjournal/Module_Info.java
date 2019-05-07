@@ -18,12 +18,16 @@ public class Module_Info extends AppCompatActivity {
     Button btnAdd, btnInfo, btnEmail;
     ArrayAdapter aa;
     ListView lvInfo;
-    ArrayList<Grade> grades;
+    ArrayList<Grade> c347, c302;
+    String module;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module__info);
+
+        Intent i = getIntent();
+        module = i.getStringExtra("module");
 
         btnAdd = findViewById(R.id.buttonAdd);
         btnEmail = findViewById(R.id.buttonEmail);
@@ -31,12 +35,16 @@ public class Module_Info extends AppCompatActivity {
 
         lvInfo = findViewById(R.id.lvWeek);
 
-        grades = new ArrayList<Grade>();
-        grades.add(new Grade("Week 1", "B"));
-        grades.add(new Grade("Week 2", "C"));
-        grades.add(new Grade("Week 3", "A"));
+        c347 = new ArrayList<Grade>();
+        c347.add(new Grade("Week 1", "B"));
+        c347.add(new Grade("Week 2", "C"));
+        c347.add(new Grade("Week 3", "A"));
 
-        aa = new CustomAdapter(this, R.layout.row, grades);
+        if (module.equalsIgnoreCase("c347")) {
+            aa = new CustomAdapter(this, R.layout.row, c347);
+        }else{
+            aa = new CustomAdapter(this, R.layout.row, c302);
+        }
         lvInfo.setAdapter(aa);
 
 
@@ -45,7 +53,7 @@ public class Module_Info extends AppCompatActivity {
             public void onClick(View view) {
                 Intent rpIntent = new Intent(Intent.ACTION_VIEW);
                 // Set the URL to be used.
-                rpIntent.setData(Uri.parse("http://www.rp.edu.sg"));
+                rpIntent.setData(Uri.parse("https://www.rp.edu.sg/schools-courses/courses/full-time-diplomas/full-time-courses/modules/index/" + module));
                 startActivity(rpIntent);
             }
         });
@@ -55,8 +63,14 @@ public class Module_Info extends AppCompatActivity {
             public void onClick(View view) {
 
                 String msg = "Hi faci,\nI am ...\nPlease see my remarks so far, thank you!\n\n";
-                for(int i=0; i<grades.size(); i++){
-                    msg+= grades.get(i).getWeek() + ": DG: " + grades.get(i).getGrade()+"\n";
+                if (module.equalsIgnoreCase("c347")) {
+                    for (int i = 0; i < c347.size(); i++) {
+                        msg += c347.get(i).getWeek() + ": DG: " + c347.get(i).getGrade() + "\n";
+                    }
+                }else{
+                    for (int i = 0; i < c302.size(); i++) {
+                        msg += c302.get(i).getWeek() + ": DG: " + c302.get(i).getGrade() + "\n";
+                    }
                 }
                 // The action you want this intent to do;
                 // ACTION_SEND is used to indicate sending text
@@ -77,11 +91,15 @@ public class Module_Info extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Module_Info.this, Add_Daily_Grade.class);
-                Integer num = grades.size() + 1;
+                Integer num=0;
+                if (module.equalsIgnoreCase("c347")) {
+                    num = c347.size() + 1;
+                }else{
+                    num = c302.size() + 1;
+                }
                 String week = "Week " + num.toString();
                 i.putExtra("week", week);
                 startActivityForResult(i, requestCode);
-
             }
         });
     }
@@ -89,19 +107,24 @@ public class Module_Info extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Integer num = grades.size() + 1;
+        Integer num;
+        if (module.equalsIgnoreCase("c347")) {
+            num = c347.size() + 1;
+        }else{
+            num = c302.size() + 1;
+        }
 
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 // Get data passed back from 2nd activity
                 String grade = data.getStringExtra("grade");
-                grades.add(new Grade("Week " + num.toString(), grade));
-
+                if (module.equalsIgnoreCase("c347")) {
+                    c347.add(new Grade("Week " + num.toString(), grade));
+                }else{
+                    c302.add(new Grade("Week " + num.toString(), grade));
+                }
                 aa.notifyDataSetChanged();
-
             }
         }
-
     }
 }
